@@ -9,7 +9,9 @@ public class PlayerMovementScript : MonoBehaviour
     public float mouseVerticalInput;
 
     [SerializeField]public float speed;
+    [SerializeField]public float jumpForce;
     [SerializeField]public float rotationSpeed;
+    [SerializeField]public float distToGround;
 
     public Rigidbody rb;
 
@@ -23,21 +25,20 @@ public class PlayerMovementScript : MonoBehaviour
     void FixedUpdate()
     {
         //TEST SCENE LOADER
-        if(Input.GetButtonDown("Jump"))
+        if(Input.GetButtonDown("Jump") && IsGrounded())
         {
-            
-            SceneController.instance.NextLevel();
+            //To be Updated
+            rb.AddForce(0,jumpForce, 0, ForceMode.Impulse);
         }
 
         InputControl();
 
-        Vector3 forward = transform.TransformDirection(Vector3.forward)*verticalInput;
-        Vector3 right = transform.TransformDirection(Vector3.right)*horizontalInput;
+        Vector3 forward = transform.forward*verticalInput;
+        Vector3 right = transform.right*horizontalInput;
         transform.Translate((forward + right)*speed *  Time.deltaTime);
 
 
         //transform.Rotate(0,rotationSpeed*mouseHorizontalInput,0);
-
 
         
         
@@ -50,5 +51,11 @@ public class PlayerMovementScript : MonoBehaviour
 
         mouseHorizontalInput = Input.GetAxis("Mouse X");
         mouseVerticalInput = Input.GetAxis("Mouse Y");
+    }
+
+    //@@@@@@@@@@@ TO be Updated
+    bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, 0.6f);
     }
 }

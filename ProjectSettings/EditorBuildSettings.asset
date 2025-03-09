@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Ashmit/Assets/Scenes/Level1/Level1.unity
     guid: 4d50a108f54b0754da7e7837f1e7cce8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Ashmit/Assets/Scenes/Level2/Level 2.unity
     guid: 753292b425d06ce48ba1dbd08d42a4ae
-  - enabled: 1
+  - enabled: 0
     path: Assets/Ashmit/Assets/Scenes/Level3/Level 3.unity
     guid: bc67e344a98d1814da8361cd3799fcae
   m_configObjects:
