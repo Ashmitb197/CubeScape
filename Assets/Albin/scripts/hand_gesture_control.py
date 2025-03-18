@@ -94,5 +94,5 @@ finally:
     cap.release()
     cv2.destroyAllWindows()
     sock.close()
-
     print(f"📂 Gesture data saved in {os.path.abspath(csv_filename)}")
+
