@@ -2,39 +2,50 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private Transform target; // Player
-    [SerializeField] private float smoothTime = 0.3f;
-    [SerializeField] private float rotationSpeed = 5f;
-    [SerializeField] private Vector3 offset = new Vector3(0, 5, -5); // Default offset
+    public Transform player;
+    public Transform springArmComp; // Spring arm acting as a pivot for the camera
+    public float mouseSensitivity = 100f;
+    public float followSpeed = 10f;
+    public float rotationSmoothTime = 0.1f; // Smoothness for rotation
+    public Vector3 cameraOffset = new Vector3(0f, 2f, -5f);
     
-    private Vector3 _currentVelocity = Vector3.zero;
-    private float _rotationY = 0f;
+    private float yRotation = 0f;
+    private float xRotation = 0f;
+    private Rigidbody playerRigidbody;
+    private Quaternion targetRotation;
+    private Quaternion targetSpringArmRotation;
     
-    private void Awake()
+    void Start()
     {
-        _rotationY = target.eulerAngles.y;
+        Cursor.lockState = CursorLockMode.Locked;
+        playerRigidbody = player.GetComponent<Rigidbody>();
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
-        FollowTarget();
-        //RotatePlayerWithMouse();
-    }
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        
+        // Adjust rotations
+        yRotation += mouseX;
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -15f, 45f);
 
-    private void FollowTarget()
-    {
-        Vector3 targetPosition = target.position + Quaternion.Euler(0, _rotationY, 0) * offset;
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _currentVelocity, smoothTime);
-        transform.LookAt(target.position); // Keep looking at player
+        // Compute target rotation
+        targetSpringArmRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        
+        if (playerRigidbody.linearVelocity.magnitude >= 0.1f)
+        {
+            targetRotation = Quaternion.Euler(0f, yRotation, 0f);
+        }
+        
+        // Apply smooth rotation
+        springArmComp.rotation = Quaternion.Slerp(springArmComp.rotation, targetSpringArmRotation, rotationSmoothTime);
+        player.rotation = Quaternion.Slerp(player.rotation, targetRotation, rotationSmoothTime);
+        
+        // Position camera smoothly
+        Vector3 targetPosition = springArmComp.position + springArmComp.TransformDirection(cameraOffset);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
+        transform.LookAt(springArmComp.position);
     }
-
-   //  private void RotatePlayerWithMouse()
-   //  {
-   //      if (Input.GetMouseButton(1)) // Right-click to rotate
-   //      {
-   //          float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
-   //          _rotationY += mouseX;
-   //          transform.rotation = Quaternion.Euler(0, _rotationY, 0); // Rotate player
-   //      }
-   //  }
 }
