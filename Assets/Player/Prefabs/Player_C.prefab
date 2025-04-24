@@ -110,6 +110,8 @@ GameObject:
   - component: {fileID: 3203210790065004674}
   - component: {fileID: 2734036569504795910}
   - component: {fileID: 5513514077159135029}
+  - component: {fileID: 305327456926986973}
+  - component: {fileID: 2016647111964919494}
   m_Layer: 0
   m_Name: Player_C
   m_TagString: Player
@@ -191,7 +193,7 @@ CharacterController:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 63
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -199,13 +201,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 14.4
+  m_Radius: 2.981383
   m_SlopeLimit: 45
-  m_StepOffset: 0.2
+  m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 8.124527, z: 0}
 --- !u!114 &2734036569504795910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,16 +221,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 4
-  sprintSpeed: 7
   crouchSpeed: 2
-  maxStamina: 5
-  staminaDrain: 1
-  staminaRegen: 0.5
-  crouchHeight: 1
-  standHeight: 2
+  crouchHeight: 7.2
+  standHeight: 14.4
+  SpringArmYValue: 0
   controller: {fileID: 0}
+  capsuleCollider: {fileID: 0}
   inputTypeVertical: Vertical_C
   inputTypeHorizontal: Horizontal_C
+  inputTypeCrouch: Crouch_C
 --- !u!114 &5513514077159135029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +243,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothingSpeed: 10
+--- !u!114 &305327456926986973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330689793229696514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b65e81e3d976454ea98fc6f7170129d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabPoint: {fileID: 0}
+  pickupRange: 3
+  cubeLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  pickupKey: 332
+--- !u!114 &2016647111964919494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330689793229696514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 646897b72ea91fc469f326ff25ed1be2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &335003156214941640
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,8 +903,12 @@ MonoBehaviour:
   collisionLayers:
     serializedVersion: 2
     m_Bits: 63
-  inputTypeMouseX: Mouse X
-  inputTypeMouseY: Mouse Y
+  inputTypeMouseX: Mouse X_C
+  inputTypeMouseY: Mouse Y_C
+  rotationSpeed: 720
+  standingHeight: 1.5
+  crouchingHeight: 0.75
+  heightLerpSpeed: 5
 --- !u!114 &2268879211945036172
 MonoBehaviour:
   m_ObjectHideFlags: 0

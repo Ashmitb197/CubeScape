@@ -4,33 +4,28 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float walkSpeed = 4f;
-    public float sprintSpeed = 7f;
     public float crouchSpeed = 2f;
     private float currentSpeed;
 
-    [Header("Stamina")]
-    public float maxStamina = 5f;
-    private float currentStamina;
-    public float staminaDrain = 1f;
-    public float staminaRegen = 0.5f;
-
     [Header("Crouch")]
-    public float crouchHeight = 1f;
-    public float standHeight = 2f;
+    public float crouchHeight = 7.2f;
+    public float standHeight = 14.4f;
     private bool isCrouching = false;
+    public float SpringArmYValue;
 
     public CharacterController controller;
-
+    public CapsuleCollider capsuleCollider;
 
     [Header("Inputs")]
     public string inputTypeVertical;
     public string inputTypeHorizontal;
+    public string inputTypeCrouch;
 
     void Start()
     {
+        capsuleCollider = this.GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
-        currentStamina = maxStamina;
     }
 
     void Update()
@@ -39,8 +34,6 @@ public class PlayerMovement : MonoBehaviour
         HandleCrouch();
     }
 
-    
-
     void Move()
     {
         float x = Input.GetAxis(inputTypeHorizontal);
@@ -48,19 +41,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
         move.Normalize(); // Optional: prevents faster diagonal movement
 
-        // Determine speed
-        if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0 && !isCrouching)
-        {
-            currentSpeed = sprintSpeed;
-            currentStamina -= staminaDrain * Time.deltaTime;
-        }
-        else
-        {
-            currentSpeed = isCrouching ? crouchSpeed : walkSpeed;
-            currentStamina += staminaRegen * Time.deltaTime;
-        }
-
-        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        currentSpeed = isCrouching ? crouchSpeed : walkSpeed;
 
         // Apply movement with gravity
         controller.SimpleMove(move * currentSpeed);
@@ -68,11 +49,26 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleCrouch()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetButtonDown(inputTypeCrouch))
         {
             isCrouching = !isCrouching;
-            controller.height = isCrouching ? crouchHeight : standHeight;
+            if (isCrouching)
+            {
+                capsuleCollider.enabled = false;
+                controller.height = crouchHeight;
+            }
+            else
+            {
+                capsuleCollider.enabled = true;
+                controller.height = standHeight;
+            }
+
             controller.center = new Vector3(0, controller.height / 2f, 0);
         }
+    }
+
+    public bool IsCrouching()
+    {
+        return isCrouching;
     }
 }

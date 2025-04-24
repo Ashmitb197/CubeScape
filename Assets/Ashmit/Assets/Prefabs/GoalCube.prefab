@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7010938699816622239}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: GoalCube
   m_TagString: GoalCube
   m_Icon: {fileID: 0}
@@ -43,9 +43,10 @@ GameObject:
   - component: {fileID: 4267102514512311289}
   - component: {fileID: 6337325755343232937}
   - component: {fileID: 3224981299105636477}
+  - component: {fileID: 7415532910553403143}
   - component: {fileID: 4493731578614273393}
   - component: {fileID: 8505618537057914305}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cube
   m_TagString: GoalCube
   m_Icon: {fileID: 0}
@@ -62,7 +63,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 2.1455, y: 2.1455, z: 2.1455}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7010938699816622239}
@@ -120,6 +121,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7415532910553403143
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4143996171966175010}
+  m_Material: {fileID: 13400000, guid: 293a139b08b520541a602c23a354a006, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: ceba649564f098c4fb9b6e2d0e547755, type: 3}
 --- !u!54 &4493731578614273393
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -141,7 +164,7 @@ Rigidbody:
     serializedVersion: 2
     m_Bits: 0
   m_ImplicitCom: 1
-  m_ImplicitTensor: 0
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0

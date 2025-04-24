@@ -24,9 +24,31 @@ public class CameraScript : MonoBehaviour
     public string inputTypeMouseX;
     public string inputTypeMouseY;
 
+    public float rotationSpeed = 720f; // You can tweak this for snappier or smoother turn
+
+
+    [Header("Spring Arm Height Adjustment")]
+    public float standingHeight = 1.5f;
+    public float crouchingHeight = 0.75f;
+    public float heightLerpSpeed = 5f;
+
+    private PlayerMovement playerMovement;
+    private float currentOffsetY;
+
+
 
     void Start()
     {
+
+        playerMovement = player.GetComponent<PlayerMovement>();
+        currentOffsetY = standingHeight;
+
+
+        if(inputTypeMouseX == "Mouse X_C")
+        {
+            mouseSensitivity *= 10;
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         controller = player.GetComponent<CharacterController>();
         camTransform = this.transform;
@@ -39,6 +61,11 @@ public class CameraScript : MonoBehaviour
     {
         RotateCameraAndPlayer();
         PositionCamera(); // Now runs every frame for obstacle handling
+
+        float targetY = playerMovement.IsCrouching() ? crouchingHeight : standingHeight;
+        currentOffsetY = Mathf.Lerp(currentOffsetY, targetY, Time.deltaTime * heightLerpSpeed);
+        cameraOffset = new Vector3(cameraOffset.x, currentOffsetY, cameraOffset.z);
+
     }
 
     void RotateCameraAndPlayer()
@@ -55,8 +82,10 @@ public class CameraScript : MonoBehaviour
         float playerSpeed = controller.velocity.magnitude;
         if (playerSpeed > 0.1f)
         {
+            
             Quaternion targetRotation = Quaternion.Euler(0f, currentRotation.x, 0f);
-            player.rotation = Quaternion.Slerp(player.rotation, targetRotation, rotationSmoothTime * 10f);
+            player.rotation = Quaternion.RotateTowards(player.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
         }
     }
 

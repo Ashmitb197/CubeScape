@@ -27,7 +27,6 @@ public class LiftBehaviour : MonoBehaviour
                 else
                 {
                     Debug.Log("<color=red>Insert Battery</color>");
-                    
                 }
             }
             else
@@ -36,16 +35,6 @@ public class LiftBehaviour : MonoBehaviour
                 IsLiftButtonPressed = !IsLiftButtonPressed;
             }
         }
-
-        if(BatteryCollisionData)
-        {
-            if(!BatteryCollisionData.InsideTrigger)
-            {
-                LiftAnimator.SetBool("LiftButtonPressed", false);
-            }
-        }
-
-
         
         LiftAnimator.SetBool("LiftButtonPressed", IsLiftButtonPressed);
     }
