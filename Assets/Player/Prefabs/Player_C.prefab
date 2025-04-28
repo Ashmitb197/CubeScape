@@ -242,7 +242,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39b6b5e2f4460245b3f99cda46e4b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraScript: {fileID: 7867723217941496079}
   smoothingSpeed: 10
+  fallImpactThreshold: 1
+  fallStartThreshold: 1
 --- !u!114 &305327456926986973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b65e81e3d976454ea98fc6f7170129d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabPoint: {fileID: 0}
+  grabPoint: {fileID: 4846533567416163133}
   pickupRange: 3
   cubeLayer:
     serializedVersion: 2
@@ -273,6 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646897b72ea91fc469f326ff25ed1be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InteractionType: Interact Action_C
 --- !u!1 &335003156214941640
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,7 +885,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2227070342832839524}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &7867723217941496079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -902,13 +906,14 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: 1.5, z: 0}
   collisionLayers:
     serializedVersion: 2
-    m_Bits: 63
+    m_Bits: 55
   inputTypeMouseX: Mouse X_C
   inputTypeMouseY: Mouse Y_C
   rotationSpeed: 720
   standingHeight: 1.5
   crouchingHeight: 0.75
   heightLerpSpeed: 5
+  pauseMenu: {fileID: 0}
 --- !u!114 &2268879211945036172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,7 +1087,39 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4103550798227471223}
+  - {fileID: 4846533567416163133}
   m_Father: {fileID: 6514857921365437918}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3380437476092221339
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4846533567416163133}
+  m_Layer: 0
+  m_Name: Grab Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4846533567416163133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3380437476092221339}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.01228597, y: -4.187354e-13, z: -7.22598e-13, w: 0.99992454}
+  m_LocalPosition: {x: -0.0003, y: 0.0126, z: -0.0439}
+  m_LocalScale: {x: 0.010000001, y: 0.010000001, z: 0.010000001}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 124095431349121879}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3421671159213579595
 GameObject:

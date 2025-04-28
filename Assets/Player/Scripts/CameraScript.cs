@@ -27,6 +27,8 @@ public class CameraScript : MonoBehaviour
     public float rotationSpeed = 720f; // You can tweak this for snappier or smoother turn
 
 
+
+
     [Header("Spring Arm Height Adjustment")]
     public float standingHeight = 1.5f;
     public float crouchingHeight = 0.75f;
@@ -35,11 +37,15 @@ public class CameraScript : MonoBehaviour
     private PlayerMovement playerMovement;
     private float currentOffsetY;
 
+    [Header ("Pause Menu")]
+    public PauseMenu pauseMenu;
+
+    private bool shouldMove;
 
 
     void Start()
     {
-
+        shouldMove = true;
         playerMovement = player.GetComponent<PlayerMovement>();
         currentOffsetY = standingHeight;
 
@@ -49,7 +55,6 @@ public class CameraScript : MonoBehaviour
             mouseSensitivity *= 10;
         }
 
-        Cursor.lockState = CursorLockMode.Locked;
         controller = player.GetComponent<CharacterController>();
         camTransform = this.transform;
 
@@ -59,12 +64,15 @@ public class CameraScript : MonoBehaviour
 
     void LateUpdate()
     {
-        RotateCameraAndPlayer();
-        PositionCamera(); // Now runs every frame for obstacle handling
+        if(!pauseMenu.isPaused() && shouldMove)
+        {
+            RotateCameraAndPlayer();
+            PositionCamera(); // Now runs every frame for obstacle handling
 
-        float targetY = playerMovement.IsCrouching() ? crouchingHeight : standingHeight;
-        currentOffsetY = Mathf.Lerp(currentOffsetY, targetY, Time.deltaTime * heightLerpSpeed);
-        cameraOffset = new Vector3(cameraOffset.x, currentOffsetY, cameraOffset.z);
+            float targetY = playerMovement.IsCrouching() ? crouchingHeight : standingHeight;
+            currentOffsetY = Mathf.Lerp(currentOffsetY, targetY, Time.deltaTime * heightLerpSpeed);
+            cameraOffset = new Vector3(cameraOffset.x, currentOffsetY, cameraOffset.z);
+        }
 
     }
 
@@ -111,5 +119,9 @@ public class CameraScript : MonoBehaviour
         }
 
         camTransform.LookAt(springArm.position);
+    }
+    public void CanMouseMove(bool canMove)
+    {
+        shouldMove = canMove;
     }
 }

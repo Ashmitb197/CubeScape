@@ -3,39 +3,53 @@ using UnityEngine;
 
 public class SwitchPuzzleManager : MonoBehaviour
 {
-    public List<string> correctSequence = new List<string>();
-    public List<string> playerInput = new List<string>();
     public List<Switch> switches = new List<Switch>();
+    public Animator gateAnimator; // Reference to the Animator for the gate
 
     void Start()
     {
         // Automatically find all switches in the scene
         switches = new List<Switch>(FindObjectsOfType<Switch>());
+        
+        // Make sure we have a reference to the gate's Animator
+        if (gateAnimator == null)
+        {
+            Debug.LogError("Gate Animator is not assigned!");
+        }
     }
 
     public void ReceiveInput(string switchID)
     {
-        playerInput.Add(switchID);
-        int currentIndex = playerInput.Count - 1;
-
-        if (playerInput[currentIndex] != correctSequence[currentIndex])
+        // Player interacted with a switch, check if all switches are activated
+        if (AllSwitchesActivated())
         {
-            Debug.Log("Wrong switch! Resetting...");
-            playerInput.Clear();
-
-            //Turn off all switches
-            foreach (var sw in switches)
-            {
-                sw.TurnOffSwitch();
-            }
-
-            return;
+            Debug.Log("Puzzle Solved! All switches activated.");
+            
+            // Trigger the animator to open the gate
+            OpenGate();
         }
+    }
 
-        if (playerInput.Count == correctSequence.Count)
+    private bool AllSwitchesActivated()
+    {
+        foreach (var sw in switches)
         {
-            Debug.Log("Correct sequence! Puzzle solved.");
-            // Trigger something (e.g., door open)
+            if (!sw.IsOn()) // Assuming IsOn checks if the switch is activated
+                return false;
+        }
+        return true;
+    }
+
+    private void OpenGate()
+    {
+        // Set the 'OpenGate' bool to true in the gate's Animator
+        if (gateAnimator != null)
+        {
+            gateAnimator.SetBool("OpenGate", true);
+        }
+        else
+        {
+            Debug.LogWarning("Gate Animator is missing, can't open the gate.");
         }
     }
 }

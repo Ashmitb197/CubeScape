@@ -12,7 +12,8 @@ public class PlayerPickup : MonoBehaviour
 
     private GameObject heldCube;
     private Rigidbody heldRb;
-
+    private FixedJoint pickupJoint;
+    
     void Update()
     {
         if (Input.GetKeyDown(pickupKey))
@@ -27,7 +28,7 @@ public class PlayerPickup : MonoBehaviour
     void TryPickup()
     {
         // Raycast from center chest/head area
-        Ray ray = new Ray(transform.position + new Vector3(0,0.5f,0), transform.forward);
+        Ray ray = new Ray(transform.position + new Vector3(0,0.2f,0), transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * pickupRange, Color.green, 1f);
 
         if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, cubeLayer))

@@ -20,18 +20,26 @@ public class PlayerMovement : MonoBehaviour
     public string inputTypeVertical;
     public string inputTypeHorizontal;
     public string inputTypeCrouch;
+    
+
+
+    private bool shouldMove;
 
     void Start()
     {
         capsuleCollider = this.GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        shouldMove = true;
     }
 
     void Update()
     {
-        Move();
-        HandleCrouch();
+        if(shouldMove)
+        {
+            Move();
+            HandleCrouch();
+        }
     }
 
     void Move()
@@ -71,4 +79,16 @@ public class PlayerMovement : MonoBehaviour
     {
         return isCrouching;
     }
+    public void ResetMovement()
+    {
+        // Stop the controller movement
+        //currentMoveInput = Vector3.zero;
+        controller.Move(Vector3.zero); // Cancels any residual momentum
+    }
+
+    public void CanPlayerMove(bool canMove)
+    {
+        shouldMove = canMove;
+    }
+
 }

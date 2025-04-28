@@ -716,6 +716,7 @@ GameObject:
   - component: {fileID: 6986877880022833162}
   - component: {fileID: 634191528933434795}
   - component: {fileID: 3604397981454676316}
+  - component: {fileID: 2890992828480664922}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -732,7 +733,7 @@ Transform:
   m_GameObject: {fileID: 2693443467328856988}
   serializedVersion: 2
   m_LocalRotation: {x: 0.017404407, y: -0, z: -0, w: 0.9998486}
-  m_LocalPosition: {x: 0.031051636, y: 6.0300026, z: -18.75}
+  m_LocalPosition: {x: 0.03105164, y: 6.0300026, z: -18.75}
   m_LocalScale: {x: 100, y: 99.99995, z: 99.99997}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -774,7 +775,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -817,13 +818,14 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: 1.5, z: 0}
   collisionLayers:
     serializedVersion: 2
-    m_Bits: 63
+    m_Bits: 55
   inputTypeMouseX: Mouse X
   inputTypeMouseY: Mouse Y
   rotationSpeed: 720
   standingHeight: 1.5
   crouchingHeight: 0.75
   heightLerpSpeed: 5
+  pauseMenu: {fileID: 0}
 --- !u!114 &3604397981454676316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -868,6 +870,23 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &2890992828480664922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2693443467328856988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f629ec28d30b3b40b3715e28a158e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovementScript: {fileID: 678740238139011165}
+  pauseMenu: {fileID: 0}
+  cameraComp: {fileID: 2184005970702746317}
+  pauseOffset: {x: 0, y: 2, z: -5}
+  transitionSpeed: 2
 --- !u!1 &3203363830592565568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,12 +1172,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4188184375535199645}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.51, z: 8.4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.01228597, y: -4.187354e-13, z: -7.22598e-13, w: 0.99992454}
+  m_LocalPosition: {x: -0.0003, y: 0.0126, z: -0.0439}
+  m_LocalScale: {x: 0.010000001, y: 0.010000001, z: 0.010000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4573993331765722542}
+  m_Father: {fileID: 6767132787349416223}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4405665510673116175
 GameObject:
@@ -1551,7 +1570,6 @@ Transform:
   - {fileID: 7431196870605693304}
   - {fileID: 8219898151989537384}
   - {fileID: 1091284146587588406}
-  - {fileID: 3983529860555799145}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6799844871003027566
@@ -1658,7 +1676,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39b6b5e2f4460245b3f99cda46e4b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraScript: {fileID: 634191528933434795}
   smoothingSpeed: 10
+  fallImpactThreshold: 1
+  fallStartThreshold: 1
 --- !u!114 &2146521346138233085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1689,6 +1710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646897b72ea91fc469f326ff25ed1be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InteractionType: Interact Action
 --- !u!1 &5551158335717789135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1750,6 +1772,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4762489899480899224}
+  - {fileID: 3983529860555799145}
   m_Father: {fileID: 3998870885793453308}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5747813811892697541
