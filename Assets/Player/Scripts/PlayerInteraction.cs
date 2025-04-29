@@ -2,34 +2,32 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    private IInteractable currentInteractable;
+    private Switch currentSwitch;
     public string InteractionType;
 
     void Update()
     {
-        if (currentInteractable != null && Input.GetButtonDown(InteractionType))
+        if (currentSwitch != null && Input.GetButtonDown(InteractionType))
         {
-            currentInteractable.Interact();
+            currentSwitch.Interact();
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        IInteractable interactable = other.GetComponent<IInteractable>();
-        if (interactable != null)
+        Switch switchComponent = other.GetComponent<Switch>();
+        if (switchComponent != null)
         {
-            currentInteractable = interactable;
-            currentInteractable.ShowUI(true);
+            currentSwitch = switchComponent;
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        IInteractable interactable = other.GetComponent<IInteractable>();
-        if (interactable != null && interactable == currentInteractable)
+        Switch switchComponent = other.GetComponent<Switch>();
+        if (switchComponent != null && switchComponent == currentSwitch)
         {
-            currentInteractable.ShowUI(false);
-            currentInteractable = null;
+            currentSwitch = null;
         }
     }
 }

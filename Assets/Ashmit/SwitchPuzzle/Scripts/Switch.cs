@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class Switch : MonoBehaviour, IInteractable
+public class Switch : MonoBehaviour
 {
     public string switchID = "A";
     public SwitchPuzzleManager puzzleManager;
-    public GameObject interactionUI;
     public Animator anim;
 
     [Header("Letter Emission Setup")]
@@ -14,14 +13,18 @@ public class Switch : MonoBehaviour, IInteractable
     public Color onColor = Color.green;
     public string emissionProperty = "_Emission"; // default Unity emission property
 
-    void Start()
+    [Header("Message Setup")]
+    public string triggerMessage = "Press 'Q' (Keyboard) or 'A' (Controller) to activate the switch.";
+    private StartupMessages messageManager;
+
+    private void Start()
     {
         puzzleManager = FindObjectOfType<SwitchPuzzleManager>();    
+        messageManager = FindObjectOfType<StartupMessages>();
         anim = GetComponent<Animator>();
-        if (interactionUI != null)
-            interactionUI.SetActive(false);
-
-        letterRenderer = runicStone.GetComponent<Renderer>();
+        
+        if (runicStone != null)
+            letterRenderer = runicStone.GetComponent<Renderer>();
 
         SetLetterEmission(offColor); // Start with OFF color
     }
@@ -31,13 +34,6 @@ public class Switch : MonoBehaviour, IInteractable
         anim.SetBool("Open", true);
         SetLetterEmission(onColor); // When switch is activated, set letter to ON color
         puzzleManager.ReceiveInput(switchID);
-        ShowUI(false);
-    }
-
-    public void ShowUI(bool show)
-    {
-        if (interactionUI != null)
-            interactionUI.SetActive(show);
     }
 
     public void TurnOffSwitch()
@@ -53,11 +49,8 @@ public class Switch : MonoBehaviour, IInteractable
 
     private void SetLetterEmission(Color color)
     {
-        Debug.Log("SetLetterEmission called");
-
         if (letterRenderer != null)
         {
-            Debug.Log("Yeahhhhh - Renderer is valid!");
             Material mat = letterRenderer.material;
             mat.SetColor("_EmissionColor", color); 
             mat.EnableKeyword("_EMISSION");
@@ -69,6 +62,27 @@ public class Switch : MonoBehaviour, IInteractable
         }
     }
 
+    // ========== Handle Player Entering/Exiting Trigger ==========
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (messageManager != null)
+            {
+                messageManager.OverrideMessage(triggerMessage);
+            }
+        }
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (messageManager != null)
+            {
+                messageManager.ClearOverride();
+            }
+        }
+    }
 }
